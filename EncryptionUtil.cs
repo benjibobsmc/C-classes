@@ -60,9 +60,20 @@ namespace $privateproject
             algorithm.Mode = CipherMode.ECB;
             algorithm.KeySize = 256;
             ICryptoTransform transform = algorithm.CreateDecryptor(key, iv);
-            byte[] inputbuffer = Convert.FromBase64String(text);
-            byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
-            return Encoding.Unicode.GetString(outputBuffer);
+            byte[] inputbuffer = Encoding.UTF8.GetBytes("test");
+            try
+            {
+                inputbuffer = Convert.FromBase64String(text);
+            }catch(FormatException e){
+                return "The text you provided is not in a recongised encrypted format";
+            }
+            try
+            {
+                byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
+                return Encoding.Unicode.GetString(outputBuffer);
+            }catch(Exception e){
+                return "Invalid provided, could not decrypt text!";
+            }
         }
     }
 }
