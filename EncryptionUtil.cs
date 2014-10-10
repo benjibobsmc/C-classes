@@ -65,7 +65,7 @@ namespace $privateproject
             {
                 inputbuffer = Convert.FromBase64String(text);
             }catch(FormatException e){
-                return "The text you provided is not in a recongised encrypted format";
+                return "The text you provided is not in a recognised encrypted format";
             }
             try
             {
